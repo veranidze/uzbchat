@@ -133,10 +133,10 @@
                 </div>
                 <div class="screen_wrap__tUG-6">
                     <div class="screen_scrollCon__h2j57" style="cursor: grab;">
-                        <div class="screen_item__J+GuZ"><img alt="screen" src="1.png"></div>
-                        <div class="screen_item__J+GuZ"><img alt="screen" src="2.png"></div>
-                        <div class="screen_item__J+GuZ"><img alt="screen" src="3.png"></div>
-                        <div class="screen_item__J+GuZ"><img alt="screen" src="4.png"></div>
+                        <div class="screen_item__J+GuZ"><img alt="screen" src="1.png" alt="Image 1"></div>
+                        <div class="screen_item__J+GuZ"><img alt="screen" src="2.png" alt="Image 2"></div>
+                        <div class="screen_item__J+GuZ"><img alt="screen" src="3.png" alt="Image 3"></div>
+                        <div class="screen_item__J+GuZ"><img alt="screen" src="4.png" alt="Image 4"></div>
                     </div>
                 </div>
                 <div class="blockInfo_wrap__dXLoU">
@@ -453,6 +453,45 @@
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    });
+</script>
+<!-- Add this modal container somewhere in your HTML body, preferably near the end -->
+<div id="imageModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); align-items:center; justify-content:center;">
+    <span id="modalClose" style="position:absolute; top:20px; right:30px; color:#fff; font-size:30px; cursor:pointer;">&times;</span>
+    <img id="modalImg" src="" alt="Enlarged Image" style="max-width:90%; max-height:90%; border-radius:8px; box-shadow:0 0 15px #000;">
+</div>
+
+<script>
+    // List of image filenames to enable modal viewing
+    const imageFiles = ['1.png', '2.png', '3.png', '4.png'];
+
+    // Function to open modal with clicked image
+    function openImageModal(src) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        modalImg.src = src;
+        modal.style.display = 'flex';
+    }
+
+    // Close modal when clicking on close button or outside the image
+    document.getElementById('modalClose').onclick = function() {
+        document.getElementById('imageModal').style.display = 'none';
+    };
+    document.getElementById('imageModal').onclick = function(e) {
+        if (e.target === this) {
+            this.style.display = 'none';
+        }
+    };
+
+    // Attach click event listeners to images with src matching imageFiles
+    window.addEventListener('DOMContentLoaded', () => {
+        imageFiles.forEach(fileName => {
+            const imgs = document.querySelectorAll(`img[src="${fileName}"]`);
+            imgs.forEach(img => {
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', () => openImageModal(fileName));
+            });
+        });
     });
 </script>
 
